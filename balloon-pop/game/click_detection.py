@@ -1,17 +1,24 @@
 """
-click_detection: figures out whether a click landed on a balloon.
+Click detection for balloon hits.
 """
 
 
 def check_pop(balloons, click_pos):
-    """
-    Returns the balloon that was clicked, or None if the click missed
-    every balloon.
-    """
-    for balloon in balloons:
-        dx = click_pos[0] - balloon.x
-        dy = click_pos[1] - balloon.y
+    """Return the balloon that was clicked, or None if no hit is found."""
+    if click_pos is None:
+        return None
+
+    click_x, click_y = click_pos
+
+    # Check the most recently drawn balloon first so overlapping balloons
+    # behave naturally and the hit test matches the visible circle.
+    for balloon in reversed(balloons):
+        dx = click_x - balloon.x
+        dy = click_y - balloon.y
         distance_squared = dx * dx + dy * dy
-        if distance_squared <= balloon.radius:
+        radius_squared = balloon.radius * balloon.radius
+
+        if distance_squared <= radius_squared:
             return balloon
+
     return None
