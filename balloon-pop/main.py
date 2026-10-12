@@ -1,10 +1,4 @@
-"""
-Balloon Pop (Lab Starter)
-
-Run with:  python3 main.py
-
-Click balloons to pop them before they reach the bottom.
-"""
+"""Main game loop for Balloon Pop."""
 
 import pygame
 
@@ -22,17 +16,24 @@ def main():
     engine = GameEngine()
     running = True
     while running:
+        dt = clock.tick(60) / 1000.0
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and engine.game_over:
+                    engine.start_new_round()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                engine.handle_click(event.pos)
+                if engine.game_over:
+                    engine.start_new_round()
+                else:
+                    engine.handle_click(event.pos)
 
-        engine.update()
+        engine.update(dt)
         engine.draw(screen, font)
 
         pygame.display.flip()
-        clock.tick(60)
 
     pygame.quit()
 

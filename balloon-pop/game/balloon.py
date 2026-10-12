@@ -1,22 +1,20 @@
-"""
-Balloon: falls from the top of the screen. The player must pop it
-before it reaches the bottom. Balloons vary in size - this matters for
-how click detection should work.
-"""
+"""Balloon entity with a type and score effect."""
 
 import pygame
 
 
 class Balloon:
-    def __init__(self, x, y, radius, speed, color=(220, 90, 120)):
+    def __init__(self, x, y, radius, speed, color=(220, 90, 120), kind="normal", points=10):
         self.x = x
         self.y = y
         self.radius = radius
         self.speed = speed
         self.color = color
+        self.kind = kind
+        self.points = points
 
-    def update(self):
-        self.y += self.speed
+    def update(self, dt=1 / 60):
+        self.y += self.speed * dt * 60
 
     def is_past_bottom(self, height):
         return self.y - self.radius > height

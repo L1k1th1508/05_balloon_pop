@@ -1,6 +1,4 @@
-"""
-renderer: all pygame drawing lives here, kept separate from game logic.
-"""
+"""Drawing layer for the balloon pop game."""
 
 import pygame
 
@@ -13,9 +11,15 @@ COLOR_TEXT = (30, 30, 30)
 
 def draw_scene(surface, balloons):
     surface.fill(COLOR_BG)
-    for b in balloons:
-        pygame.draw.circle(surface, b.color, (int(b.x), int(b.y)), b.radius)
-        pygame.draw.line(surface, (120, 120, 120), (b.x, b.y + b.radius), (b.x, b.y + b.radius + 12), 2)
+    for balloon in balloons:
+        pygame.draw.circle(surface, balloon.color, (int(balloon.x), int(balloon.y)), balloon.radius)
+        pygame.draw.line(
+            surface,
+            (120, 120, 120),
+            (balloon.x, balloon.y + balloon.radius),
+            (balloon.x, balloon.y + balloon.radius + 12),
+            2,
+        )
 
 
 def draw_text(surface, font, text, pos, color=COLOR_TEXT):
